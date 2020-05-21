@@ -13,12 +13,14 @@
 <script>
     import MessageRow from 'components/messages/MessageRow.vue'
     import MessageForm from 'components/messages/MessageFrom.vue'
+    import messagesApi from 'api/messages'
 
     export default {
         props: ['messages'],
         components: {
           MessageRow,
-          MessageForm
+          MessageForm,
+            messagesApi
         },
         data() {
             return {
@@ -35,7 +37,7 @@
                 this.message = message
             },
             deleteMessage(message) {
-                this.$resource('/message{/id}').remove({id: message.id}).then(result => {
+                messagesApi.remove(message.id).then(result => {
                     if (result.ok) {
                         this.messages.splice(this.messages.indexOf(message), 1)
                     }
